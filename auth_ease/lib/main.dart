@@ -1,3 +1,5 @@
+import 'package:auth_ease/src/screens/authentication/combined_animation_auth_screen.dart';
+import 'package:auth_ease/src/screens/landing/main_landing_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -9,6 +11,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        useMaterial3: true,
+        brightness: Brightness.light
+      ),
+      home: const SignInAndSignUpScreen(),
+    );
   }
 }
