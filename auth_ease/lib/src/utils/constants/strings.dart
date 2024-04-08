@@ -1,9 +1,9 @@
-const twoPeopleJpg = 'assets/png/pexels-armin-rimoldi-5553080.png';
-const threePeople1Jpg = 'assets/png/pexels-buro-millennial-1438072 (1).png';
-const threePeople2Jpg = 'assets/png/pexels-kampus-production-5940841.png';
-const onePersonJpg = 'assets/png/pexels-charlotte-may-5965930.png';
-const manyPeopleJpg = 'assets/png/pexels-kampus-production-5940841.png';
-const universityJpg = 'assets/png/zhanhui-li-1iuxWsIZ6ko-unsplash.png';
+const twoPeopleJpg = 'assets/png_images/pexels-armin-rimoldi-5553080.png';
+const threePeople1Jpg = 'assets/png_images/pexels-buro-millennial-1438072 (1).png';
+const threePeople2Jpg = 'assets/png_images/pexels-kampus-production-5940841.png';
+const onePersonJpg = 'assets/png_images/pexels-charlotte-may-5965930.png';
+const manyPeopleJpg = 'assets/png_images/pexels-kampus-production-5940841.png';
+const universityJpg = 'assets/png_images/zhanhui-li-1iuxWsIZ6ko-unsplash.png';
 
 const bikeRiderLottie = 'assets/lottie_json/Animation - 1711125544499.json';
 const bikeRider2Lottie = 'assets/lottie_json/Animation - 1711125602836.json';
@@ -14,8 +14,7 @@ const emptyString = '';
 const getStartedString = 'Get Started';
 const signUpString = 'Sign Up';
 const signInString = 'Sign In';
-const introString = 'Welcome';
-const introString2 = 'You look good';
+const introString = 'Create Your Own Future Today...';
 
 const text1 = 'Welcome to CampusConnect';
 const text2 = 'Discuss latest Campus trends';

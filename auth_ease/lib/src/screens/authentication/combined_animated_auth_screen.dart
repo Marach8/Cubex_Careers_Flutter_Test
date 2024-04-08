@@ -12,35 +12,35 @@ class SignInAndSignUpScreen extends StatefulWidget {
 }
 
 class _SignInAndSignUpScreenState extends State<SignInAndSignUpScreen> with TickerProviderStateMixin{
-  late AnimationController basicController, scientificController;
-  late Animation<double> basicAnimation, scientificAnimation;
+  late AnimationController signInController, signUpController;
+  late Animation<double> signInAnimation, signUpAnimation;
 
   @override 
   void initState(){
     super.initState();
-    basicController = AnimationController(
+    signInController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 1)
     );
 
-    scientificController = AnimationController(
+    signUpController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 1)
     );
 
-    basicAnimation = Tween<double>(
+    signInAnimation = Tween<double>(
       begin: 0, end: -pi/2
-    ).animate(basicController);
+    ).animate(signInController);
 
-    scientificAnimation = Tween<double>(
+    signUpAnimation = Tween<double>(
       begin: pi/2.7, end: 0
-    ).animate(scientificController);
+    ).animate(signUpController);
   }
 
   @override 
   void dispose(){
-    basicController.dispose();
-    scientificController.dispose();
+    signInController.dispose();
+    signUpController.dispose();
     super.dispose();
   }
 
@@ -49,7 +49,7 @@ class _SignInAndSignUpScreenState extends State<SignInAndSignUpScreen> with Tick
     final width = MediaQuery.of(context).size.width;
 
     return AnimatedBuilder(
-      animation: Listenable.merge([basicController, scientificController]),
+      animation: Listenable.merge([signInController, signUpController]),
       builder: (_, __) => Stack(
         children: [
           Container(
@@ -66,22 +66,22 @@ class _SignInAndSignUpScreenState extends State<SignInAndSignUpScreen> with Tick
             alignment: Alignment.centerLeft,
             transform: Matrix4.identity()
               ..setEntry(3, 2, 0.001)
-              ..translate(basicController.value * width)
-              ..rotateY(basicAnimation.value),
+              ..translate(signInController.value * width)
+              ..rotateY(signInAnimation.value),
             child: SignInScreen(
-              controller1: basicController, 
-              controller2: scientificController
+              controller1: signInController, 
+              controller2: signUpController
             )
           ),
           Transform(
             alignment: Alignment.centerRight,
             transform: Matrix4.identity()
               ..setEntry(3, 2, 0.001)
-              ..translate(-width + scientificController.value * width)
-              ..rotateY(scientificAnimation.value),
+              ..translate(-width + signUpController.value * width)
+              ..rotateY(signUpAnimation.value),
             child: SignUpScreen(
-              controller1: basicController, 
-              controller2: scientificController
+              controller1: signInController, 
+              controller2: signUpController
             )
           ),
         ]

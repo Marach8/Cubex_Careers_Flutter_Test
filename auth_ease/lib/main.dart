@@ -1,4 +1,4 @@
-import 'package:auth_ease/src/screens/authentication/combined_animation_auth_screen.dart';
+import 'package:auth_ease/src/screens/authentication/combined_animated_auth_screen.dart';
 import 'package:auth_ease/src/screens/landing/main_landing_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         brightness: Brightness.light
       ),
-      home: const SignInAndSignUpScreen(),
+      home: const LandingPageScreen(),
     );
   }
 }

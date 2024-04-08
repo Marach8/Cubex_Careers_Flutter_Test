@@ -1,5 +1,5 @@
-import 'package:auth_ease/src/screens/landing/sub_views/bottom_sheet_for_landing_screen.dart';
-import 'package:auth_ease/src/screens/landing/sub_views/landing_screen_page_view.dart';
+import 'package:auth_ease/src/screens/landing/sub_views/bottom_sheet.dart';
+import 'package:auth_ease/src/screens/landing/sub_views/page_view.dart';
 import 'package:auth_ease/src/widgets/custom_widgets/annotated_region_widget.dart';
 import 'package:flutter/material.dart';
 

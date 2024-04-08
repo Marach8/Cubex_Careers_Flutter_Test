@@ -6,9 +6,10 @@ extension ModifyText on Text{
   Text decorateText({
     required Color color, 
     required FontWeight fontWeight,
-    required double fontSize,
+    required double fontSize, 
+    int? maxLines,
     bool? controlOverflow, 
-    bool? noCenterAlign
+    bool? noCenterAlign,
   }) => Text(
     data ?? emptyString, 
     style: TextStyle(
@@ -18,6 +19,7 @@ extension ModifyText on Text{
       color: color,
     ),
     overflow: controlOverflow ?? false ? TextOverflow.ellipsis : null,
+    maxLines: maxLines,
     softWrap: true,
     textAlign: noCenterAlign ?? false ? null : TextAlign.center,
   );

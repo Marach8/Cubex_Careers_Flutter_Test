@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 class GenericText extends StatelessWidget {
   final Color? color;
   final double fontSize;
+  final int? maxLines;
   final FontWeight fontWeight;
   final String text;
   final bool? noCenterAlign, controlOverflow;
@@ -14,6 +15,7 @@ class GenericText extends StatelessWidget {
     this.color,
     this.noCenterAlign,
     this.controlOverflow,
+    this.maxLines,
     required this.fontSize,
     required this.fontWeight,
     required this.text
@@ -26,7 +28,8 @@ class GenericText extends StatelessWidget {
       noCenterAlign: noCenterAlign,
       color: color ?? blackColor,
       fontWeight: fontWeight,
-      fontSize: fontSize
+      fontSize: fontSize,
+      maxLines: maxLines
     );
   }
 }

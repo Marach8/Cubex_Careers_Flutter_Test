@@ -1,3 +1,4 @@
+import 'package:auth_ease/src/screens/main_screens/home_screen/main_home_screen.dart';
 import 'package:auth_ease/src/utils/constants/colors.dart';
 import 'package:auth_ease/src/utils/constants/fontsizes.dart';
 import 'package:auth_ease/src/utils/constants/fontweights.dart';
@@ -95,7 +96,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: GestureDetector(
-                          onTap: (){},
+                          onTap: () => Navigator.pop(context),
                           child: const Icon(Icons.keyboard_arrow_left_sharp),
                         ),
                       ),
@@ -152,7 +153,14 @@ class _SignInScreenState extends State<SignInScreen> {
                       ),
                       const Gap(20),
                       GenericElevatedButton(
-                        onPressed: (){},
+                        onPressed: (){
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const HomeScreen()
+                            )
+                          );
+                        },
                         title: signInString,
                         backgroundColor: redColor,
                         color: whiteColor,

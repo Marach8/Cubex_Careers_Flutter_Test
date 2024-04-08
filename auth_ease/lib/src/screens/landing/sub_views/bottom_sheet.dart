@@ -1,3 +1,4 @@
+import 'package:auth_ease/src/screens/authentication/combined_animated_auth_screen.dart';
 import 'package:auth_ease/src/utils/constants/colors.dart';
 import 'package:auth_ease/src/utils/constants/fontsizes.dart';
 import 'package:auth_ease/src/utils/constants/fontweights.dart';
@@ -35,7 +36,14 @@ class BottomSheetForLandingScreen extends StatelessWidget {
                   color: whiteColor,
                   fontSize: fontSize4,
                   backgroundColor: redColor,
-                  onPressed: (){},
+                  onPressed: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const SignInAndSignUpScreen()
+                      )
+                    );
+                  },
                   title: getStartedString
                 ),
                 const Gap(15),
