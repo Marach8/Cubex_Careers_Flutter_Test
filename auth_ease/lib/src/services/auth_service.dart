@@ -2,8 +2,6 @@ import 'dart:convert';
 import 'package:auth_ease/src/utils/constants/strings/api_strings_and_urls.dart';
 import 'package:auth_ease/src/utils/constants/strings/text_strings.dart.dart';
 import 'package:http/http.dart' as http;
-import 'dart:developer' as marach show log;
-
 import 'package:intl/intl.dart';
 
 class AuthService{
@@ -43,6 +41,49 @@ class AuthService{
       );
 
       if(response.statusCode == 201){
+        return authSuccessString;
+      }
+
+      else if(response.statusCode == 409){
+        return authFailureString + tryAnotherUsernameString;
+      }
+
+      else{
+        return authFailureString;
+      }
+    }
+
+    catch (_){
+      return errorString;
+    }
+  }
+
+
+  Future<dynamic> loginUser({
+    required String email,
+    required String password
+  }) async{
+    final userPayload = {
+      emailString.toLowerCase(): email,
+      passwordString.toLowerCase(): password,
+    };
+    
+    final url = Uri.parse(signInEndPoint);
+
+    try{
+      final response = await http.post(
+        url,
+        body: jsonEncode(userPayload),
+        headers: {
+          contentType: jsonFormat,
+          accept: jsonFormat
+        }
+      );
+
+      if(response.statusCode == 201){
+        final jsonData = jsonDecode(response.body);
+        final loginToken = jsonData[token];
+        print(loginToken);
         return authSuccessString;
       }
 

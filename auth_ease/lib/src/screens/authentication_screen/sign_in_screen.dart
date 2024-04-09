@@ -1,9 +1,12 @@
-import 'package:auth_ease/src/screens/main_screens/home_screen/main_home_screen.dart';
+import 'package:auth_ease/src/services/auth_service.dart';
 import 'package:auth_ease/src/utils/constants/colors.dart';
 import 'package:auth_ease/src/utils/constants/fontsizes.dart';
 import 'package:auth_ease/src/utils/constants/fontweights.dart';
 import 'package:auth_ease/src/utils/constants/strings/lottie_animation_strings.dart';
 import 'package:auth_ease/src/utils/constants/strings/text_strings.dart.dart';
+import 'package:auth_ease/src/utils/functions/helper_functions.dart';
+import 'package:auth_ease/src/utils/ui_dialogs/flushbar.dart';
+import 'package:auth_ease/src/utils/ui_dialogs/loading_screen/loading_screen.dart';
 import 'package:auth_ease/src/widgets/custom_widgets/annotated_region_widget.dart';
 import 'package:auth_ease/src/widgets/custom_widgets/elevated_button_widget.dart';
 import 'package:auth_ease/src/widgets/custom_widgets/lottie_animation.dart';
@@ -51,6 +54,8 @@ class _SignInScreenState extends State<SignInScreen> {
   
   @override
   Widget build(BuildContext context) {
+    final loadingScreen = LoadingScreen();
+
     return GenericAnnotatedRegion(
       child: Scaffold(
         body: Container(
@@ -117,14 +122,7 @@ class _SignInScreenState extends State<SignInScreen> {
                               hintText: emailString,
                               onSaved: (value) => email = value!,
                               leadingWidget: const Icon(Icons.email_outlined),
-                              validator: (value){
-                                if(value == null || value.isEmpty){
-                                  return emptyFieldsString;
-                                }
-                                else{
-                                  return null;
-                                }
-                              },
+                              validator: (value) => validateForm(value: value),
                             ),
 
                             const Gap(20),
@@ -133,16 +131,9 @@ class _SignInScreenState extends State<SignInScreen> {
                               builder: (_, value, __){
                                 return GenericTextFormField(
                                   hintText: passwordString,
-                                  onSaved: (value) => email = value!,
+                                  onSaved: (value) => password = value!,
                                   leadingWidget: const Icon(Icons.lock_outline_rounded),
-                                  validator: (value){
-                                    if(value == null || value.isEmpty){
-                                      return emptyFieldsString;
-                                    }
-                                    else{
-                                      return null;
-                                    }
-                                  },
+                                  validator: (value) => validateForm(value: value),
                                   suffixIcon: IconButton(
                                     onPressed: () => passwordNotifier.value = !passwordNotifier.value,
                                     icon: Visibility(
@@ -176,10 +167,19 @@ class _SignInScreenState extends State<SignInScreen> {
                       ),
                       const Gap(20),
                       GenericElevatedButton(
-                        onPressed: (){
+                        onPressed: () async{
                           if(formKey.currentState!.validate()){
                             formKey.currentState!.save();
+                            loadingScreen.showOverlay(context: context, text: registeringString);
+                              await AuthService().loginUser(
+                                email: email.trim(),
+                                password: password.trim(),
+                              ).then((registrationResult) async{
+                                loadingScreen.hideOverlay();
+                                await showFlushbar(context: context, message: registrationResult);
+                              });
                           }
+
                           // Navigator.pushReplacement(
                           //   context,
                           //   MaterialPageRoute(

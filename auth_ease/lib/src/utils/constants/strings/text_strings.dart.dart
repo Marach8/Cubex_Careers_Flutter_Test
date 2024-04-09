@@ -45,11 +45,17 @@ const addPhotoString = 'Add Photo';
 const atSignString = '@';
 const missingAtSignString = "This field must contain the '@' sign!";
 const weakPasswordString = 'This field must contain at least a number and a special character';
+const invalidPhoneNumberString = 'Please enter a valid phone number!';
+const noPhotoString = 'No Display Picture';
+const continueWithoutPhotoString = 'Want to continue without a picture?...';
+const cancelString = 'Cancel';
+const continueString = 'Continue';
 
 const authSuccessString = 'Authentication Successful!🎉';
 const authFailureString = 'Authentication Failed!🚫';
 const errorString = 'An error occured! Ensure you are connected to the internet...';
 const tryAnotherUsernameString= ' Try with another username';
+const numbers0to9 = '0123456789';
 
 const homeString = 'Home';
 const eventsString = 'Events';

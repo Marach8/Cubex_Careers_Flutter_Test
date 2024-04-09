@@ -65,7 +65,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   
   @override
   Widget build(BuildContext context) {
-    final loadinScreen = LoadingScreen();
+    final loadingScreen = LoadingScreen();
 
     return GenericAnnotatedRegion(
       child: Scaffold(
@@ -110,7 +110,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: GestureDetector(
-                          onTap: (){},
+                          onTap: () => Navigator.pop(context),
                           child: const Icon(Icons.keyboard_arrow_left_sharp),
                         ),
                       ),
@@ -150,7 +150,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             const Gap(15),
                             GenericTextFormField(
                               hintText: phoneNumberString,
-                              validator: (value) => validateForm(value: value),
+                              validator: (value) => validateForm(
+                                value: value,
+                                specialPhoneNumberCheck: true
+                              ),
                               onSaved: (value) => phoneNumber = value!,
                               leadingWidget: const Icon(Icons.phone_outlined),
                             ),
@@ -241,10 +244,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                           if(formKey.currentState!.validate()){
                             formKey.currentState!.save();
-                            marach.log('userImageString is $userImageString');
                             
                             if(password.trim() == confirmPassword.trim()){
-                              loadinScreen.showOverlay(context: context, text: registeringString);
+                              loadingScreen.showOverlay(context: context, text: registeringString);
                               await AuthService().registerNewUser(
                                 username: username.trim(),
                                 email: email.trim(),
@@ -253,7 +255,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 phoneNumber: phoneNumber.trim(),
                                 imageString: userImageString
                               ).then((registrationResult) async{
-                                loadinScreen.hideOverlay();
+                                loadingScreen.hideOverlay();
                                 marach.log(registrationResult);
                                 await showFlushbar(context: context, message: registrationResult);
                               });

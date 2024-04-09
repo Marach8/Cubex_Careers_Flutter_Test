@@ -9,14 +9,19 @@ double getScreenHeight(BuildContext context)
 
 bool passwordIsStrong(String password){
   RegExp passwordRegex = RegExp(r'^(?=.*[!@#\$%^&*()_+\-=\[\]{};:\'"\\|,.<>/?0-9]).{8,}");
-  // final regex = RegExp(r'^(?=.*[0-9])(?=.*[!@#\$%&\*])[a-zA-Z0-9!@#$%^&*]{8,}$');
   return passwordRegex.hasMatch(password);
+}
+
+bool phoneNumberIsOkay(String phoneNumber){
+  return phoneNumber.split(emptyString)
+    .every((element) => numbers0to9.contains(element));
 }
 
 String? validateForm({
   required String? value,
   bool? specialEmailCheck,
-  bool? specialpasswordCheck
+  bool? specialpasswordCheck,
+  bool? specialPhoneNumberCheck
 }){
   if(value == null || value.isEmpty){
     return emptyFieldsString;
@@ -29,6 +34,11 @@ String? validateForm({
   else if(specialpasswordCheck != null && !passwordIsStrong(value)){
     return weakPasswordString;
   }
+
+  else if(specialPhoneNumberCheck != null && !phoneNumberIsOkay(value)){
+    return invalidPhoneNumberString;
+  }
+
   else{
     return null;
   }
