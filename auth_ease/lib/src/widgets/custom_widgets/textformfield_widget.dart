@@ -12,11 +12,13 @@ class GenericTextFormField extends StatelessWidget {
   suffixIcon;
   final FocusNode? focusNode;
   final String? Function(String? value)? validator;
+  final void Function(String? value)? onSaved;
 
   const GenericTextFormField({
     super.key,
     required this.hintText,
     required this.validator,
+    required this.onSaved,
     this.leadingWidget,
     this.obscureText,
     this.suffixIcon,
@@ -28,6 +30,7 @@ class GenericTextFormField extends StatelessWidget {
 
     return TextFormField(
       validator: validator,
+      onSaved: onSaved,
       maxLines: 1,
       focusNode: focusNode,
       cursorColor: blackColor,

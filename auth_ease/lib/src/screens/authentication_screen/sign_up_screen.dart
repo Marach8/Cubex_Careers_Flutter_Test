@@ -1,18 +1,21 @@
 import 'package:auth_ease/src/screens/authentication_screen/sub_widgets/add_photo_widget.dart';
-import 'package:auth_ease/src/screens/authentication_screen/sub_widgets/signup_form.dart';
+import 'package:auth_ease/src/services/auth_service.dart';
 import 'package:auth_ease/src/utils/constants/colors.dart';
 import 'package:auth_ease/src/utils/constants/fontsizes.dart';
 import 'package:auth_ease/src/utils/constants/fontweights.dart';
 import 'package:auth_ease/src/utils/constants/strings/lottie_animation_strings.dart';
 import 'package:auth_ease/src/utils/constants/strings/text_strings.dart.dart';
 import 'package:auth_ease/src/utils/functions/pick_profile_photo.dart';
+import 'package:auth_ease/src/utils/ui_dialogs/loading_screen/loading_screen.dart';
 import 'package:auth_ease/src/widgets/custom_widgets/annotated_region_widget.dart';
 import 'package:auth_ease/src/widgets/custom_widgets/elevated_button_widget.dart';
 import 'package:auth_ease/src/widgets/custom_widgets/lottie_animation.dart';
 import 'package:auth_ease/src/widgets/custom_widgets/rich_text_widget.dart';
 import 'package:auth_ease/src/widgets/custom_widgets/text_widget.dart';
+import 'package:auth_ease/src/widgets/custom_widgets/textformfield_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:iconsax/iconsax.dart';
 
 
 class SignUpScreen extends StatefulWidget {
@@ -29,10 +32,10 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  // late TextEditingController emailController,
-  // passwordController, confirmPasswordController,
-  // usernameController, addressController,
-  // phoneNumberController;
+  late String username, email,
+  phoneNumber, address,
+  password, confirmPassword;
+
   final formKey = GlobalKey<FormState>();
   late ValueNotifier<bool> passwordNotifier, 
   confirmPasswordNotifier;
@@ -43,12 +46,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override 
   void initState(){
     super.initState();
-    // usernameController = TextEditingController();
-    // emailController = TextEditingController();
-    // addressController = TextEditingController();
-    // phoneNumberController = TextEditingController();
-    // passwordController = TextEditingController();
-    // confirmPasswordController = TextEditingController();
     passwordNotifier = ValueNotifier(false);
     confirmPasswordNotifier = ValueNotifier(false);
     fileNameNotifier = ValueNotifier(emptyString);
@@ -56,12 +53,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override 
   void dispose(){
-    // usernameController.dispose();
-    // emailController.dispose();
-    // addressController.dispose();
-    // phoneNumberController.dispose();
-    // passwordController.dispose();
-    // confirmPasswordController.dispose();
     passwordNotifier.dispose();
     confirmPasswordNotifier.dispose();
     fileNameNotifier.dispose();
@@ -133,9 +124,115 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                       Form(
                         key: formKey,
-                        child: FormFieldsWidget(
-                          passwordNotifier: passwordNotifier,
-                          confirmPasswordNotifier: confirmPasswordNotifier,
+                        child: Column(
+                          children: [
+                            GenericTextFormField(
+                              hintText: userNameString,
+                              validator: (value){
+                                if(value == null || value.isEmpty){
+                                  return emptyFieldsString;
+                                }
+                                else{
+                                  return null;
+                                }
+                              },
+                              leadingWidget: const Icon(Iconsax.user),
+                            ),
+                            const Gap(15),
+                            GenericTextFormField(
+                              hintText: emailString,
+                              validator: (value){
+                                if(value == null || value.isEmpty){
+                                  return emptyFieldsString;
+                                }
+                                else{
+                                  return null;
+                                }
+                              },
+                              leadingWidget: const Icon(Icons.email_outlined),
+                            ),
+                            const Gap(15),
+                            GenericTextFormField(
+                              hintText: phoneNumberString,
+                              validator: (value){
+                                if(value == null || value.isEmpty){
+                                  return emptyFieldsString;
+                                }
+                                else{
+                                  return null;
+                                }
+                              },
+                              leadingWidget: const Icon(Icons.phone_outlined),
+                            ),
+                            const Gap(15),
+                            GenericTextFormField(
+                              hintText: addressString,
+                              validator: (value){
+                                if(value == null || value.isEmpty){
+                                  return emptyFieldsString;
+                                }
+                                else{
+                                  return null;
+                                }
+                              },
+                              leadingWidget: const Icon(Iconsax.home),
+                            ),
+                            const Gap(15),
+                            ValueListenableBuilder(
+                              valueListenable: passwordNotifier,
+                              builder: (_, value, __){
+                                return GenericTextFormField(
+                                  hintText: passwordString,
+                                  validator: (value){
+                                    if(value == null || value.isEmpty){
+                                      return emptyFieldsString;
+                                    }
+                                    else{
+                                      return null;
+                                    }
+                                  },
+                                  leadingWidget: const Icon(Icons.lock_outline_rounded),
+                                  suffixIcon: IconButton(
+                                    onPressed: () => passwordNotifier.value = !passwordNotifier.value,
+                                    icon: Visibility(
+                                      visible: value,
+                                      replacement: const Icon(Icons.visibility_rounded),
+                                      child: const Icon(Icons.visibility_off_rounded),
+                                    ),
+                                  ),
+                                  obscureText: value ? false : true,
+                                );
+                              },
+                            ),
+                            const Gap(15),
+                            ValueListenableBuilder(
+                              valueListenable: confirmPasswordNotifier,
+                              builder: (_, value, __){
+                                return GenericTextFormField(
+                                  hintText: confirmPasswordString,
+                                  validator: (value){
+                                    if(value == null || value.isEmpty){
+                                      return emptyFieldsString;
+                                    }
+                                    else{
+                                      return null;
+                                    }
+                                  },
+                                  
+                                  leadingWidget: const Icon(Icons.lock_outline_rounded),
+                                  suffixIcon: IconButton(
+                                    onPressed: () => confirmPasswordNotifier.value = !confirmPasswordNotifier.value,
+                                    icon: Visibility(
+                                      visible: value,
+                                      replacement: const Icon(Icons.visibility_rounded),
+                                      child: const Icon(Icons.visibility_off_rounded),
+                                    ),
+                                  ),
+                                  obscureText: value ? false : true,
+                                );
+                              },
+                            ),
+                          ],
                         ),
                       ),
 
@@ -163,11 +260,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       const Gap(15),
 
                       GenericElevatedButton(
-                        onPressed: (){},
+                        onPressed: () async{
+                          final loadinScreen = LoadingScreen();
+                          if(formKey.isva)
+                          loadinScreen.showOverlay(context: context, text: registeringString);
+                          await AuthService().registerNewUser(
+                            username: username,
+                            email: email,
+                            password: password,
+                            address: address,
+                            phoneNumber: phoneNumber,
+                            imageString: userImageString!
+                          );
+                        },
                         title: signUpString,
                         backgroundColor: redColor,
                         color: whiteColor,
                       ),
+
                       const Gap(40),
                       RichTextWidget(
                         children: [
