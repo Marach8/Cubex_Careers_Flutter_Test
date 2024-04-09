@@ -5,7 +5,9 @@ import 'package:auth_ease/src/utils/constants/fontsizes.dart';
 import 'package:auth_ease/src/utils/constants/fontweights.dart';
 import 'package:auth_ease/src/utils/constants/strings/lottie_animation_strings.dart';
 import 'package:auth_ease/src/utils/constants/strings/text_strings.dart.dart';
+import 'package:auth_ease/src/utils/functions/helper_functions.dart';
 import 'package:auth_ease/src/utils/functions/pick_profile_photo.dart';
+import 'package:auth_ease/src/utils/ui_dialogs/flushbar.dart';
 import 'package:auth_ease/src/utils/ui_dialogs/loading_screen/loading_screen.dart';
 import 'package:auth_ease/src/widgets/custom_widgets/annotated_region_widget.dart';
 import 'package:auth_ease/src/widgets/custom_widgets/elevated_button_widget.dart';
@@ -16,6 +18,7 @@ import 'package:auth_ease/src/widgets/custom_widgets/textformfield_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:iconsax/iconsax.dart';
+import 'dart:developer' as marach show log;
 
 
 class SignUpScreen extends StatefulWidget {
@@ -41,7 +44,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   confirmPasswordNotifier;
   late ValueNotifier<String> fileNameNotifier;
 
-  String? userImageString;
+  String userImageString = emptyString;
 
   @override 
   void initState(){
@@ -62,6 +65,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   
   @override
   Widget build(BuildContext context) {
+    final loadinScreen = LoadingScreen();
+
     return GenericAnnotatedRegion(
       child: Scaffold(
         body: Container(
@@ -128,73 +133,45 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           children: [
                             GenericTextFormField(
                               hintText: userNameString,
-                              validator: (value){
-                                if(value == null || value.isEmpty){
-                                  return emptyFieldsString;
-                                }
-                                else{
-                                  return null;
-                                }
-                              },
+                              validator: (value) => validateForm(value: value),
                               onSaved: (value) => username = value!,
                               leadingWidget: const Icon(Iconsax.user),
                             ),
                             const Gap(15),
                             GenericTextFormField(
                               hintText: emailString,
-                              validator: (value){
-                                if(value == null || value.isEmpty){
-                                  return emptyFieldsString;
-                                }
-                                else{
-                                  return null;
-                                }
-                              },
+                              validator: (value) => validateForm(
+                                value: value, 
+                                specialEmailCheck: true
+                              ),
                               onSaved: (value) => email = value!,
                               leadingWidget: const Icon(Icons.email_outlined),
                             ),
                             const Gap(15),
                             GenericTextFormField(
                               hintText: phoneNumberString,
-                              validator: (value){
-                                if(value == null || value.isEmpty){
-                                  return emptyFieldsString;
-                                }
-                                else{
-                                  return null;
-                                }
-                              },
+                              validator: (value) => validateForm(value: value),
                               onSaved: (value) => phoneNumber = value!,
                               leadingWidget: const Icon(Icons.phone_outlined),
                             ),
                             const Gap(15),
                             GenericTextFormField(
                               hintText: addressString,
-                              validator: (value){
-                                if(value == null || value.isEmpty){
-                                  return emptyFieldsString;
-                                }
-                                else{
-                                  return null;
-                                }
-                              },
+                              validator: (value) => validateForm(value: value),
                               onSaved: (value) => address = value!,
                               leadingWidget: const Icon(Iconsax.home),
                             ),
                             const Gap(15),
+
                             ValueListenableBuilder(
                               valueListenable: passwordNotifier,
                               builder: (_, value, __){
                                 return GenericTextFormField(
                                   hintText: passwordString,
-                                  validator: (value){
-                                    if(value == null || value.isEmpty){
-                                      return emptyFieldsString;
-                                    }
-                                    else{
-                                      return null;
-                                    }
-                                  },
+                                  validator: (value) => validateForm(
+                                    value :value,
+                                    specialpasswordCheck: true
+                                  ),
                                   onSaved: (value) => password = value!,
                                   leadingWidget: const Icon(Icons.lock_outline_rounded),
                                   suffixIcon: IconButton(
@@ -209,20 +186,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 );
                               },
                             ),
+
                             const Gap(15),
+
                             ValueListenableBuilder(
                               valueListenable: confirmPasswordNotifier,
                               builder: (_, value, __){
                                 return GenericTextFormField(
                                   hintText: confirmPasswordString,
-                                  validator: (value){
-                                    if(value == null || value.isEmpty){
-                                      return emptyFieldsString;
-                                    }
-                                    else{
-                                      return null;
-                                    }
-                                  },
+                                  validator: (value) => validateForm(value: value),
                                   onSaved: (value) => confirmPassword = value!,
                                   leadingWidget: const Icon(Icons.lock_outline_rounded),
                                   suffixIcon: IconButton(
@@ -266,21 +238,33 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                       GenericElevatedButton(
                         onPressed: () async{
-                          final loadinScreen = LoadingScreen();
+
                           if(formKey.currentState!.validate()){
                             formKey.currentState!.save();
+                            marach.log('userImageString is $userImageString');
+                            
+                            if(password.trim() == confirmPassword.trim()){
+                              loadinScreen.showOverlay(context: context, text: registeringString);
+                              await AuthService().registerNewUser(
+                                username: username.trim(),
+                                email: email.trim(),
+                                password: password.trim(),
+                                address: address.trim(),
+                                phoneNumber: phoneNumber.trim(),
+                                imageString: userImageString
+                              ).then((registrationResult) async{
+                                loadinScreen.hideOverlay();
+                                marach.log(registrationResult);
+                                await showFlushbar(context: context, message: registrationResult);
+                              });
+                            }
+                            //Password and confirmPassword do not match
+                            else{
+                              showFlushbar(context: context, message: unmatchedPasswordString);
+                            }
                           }
-                          loadinScreen.showOverlay(context: context, text: registeringString);
-                          await AuthService().registerNewUser(
-                            username: username,
-                            email: email,
-                            password: password,
-                            address: address,
-                            phoneNumber: phoneNumber,
-                            imageString: userImageString!
-                          );
                         },
-                        
+
                         title: signUpString,
                         backgroundColor: redColor,
                         color: whiteColor,

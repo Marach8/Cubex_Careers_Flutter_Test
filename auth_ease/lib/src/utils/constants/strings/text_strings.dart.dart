@@ -20,14 +20,10 @@ const userNameString = 'Username';
 const emailString = 'Email';
 const passwordString = 'Password';
 const addressString = 'Address';
-const phoneNumberString = 'Phone Number';
-const profilePictureString = 'Profile Picture';
+const phoneNumberString = 'Phone';
+const profilePictureString = 'Image';
 const dateTimeOfSignUpString = 'datetime-of-signUp';
 const dateFormatString = 'yyyy-MM-dd, hh:mm a';
-
-const authSuccessString = 'Authentication success!';
-const usersString = 'Users';
-const userNotVerifiedString = 'User not verified! Check your email for a verification link.';
 
 const welcomeBackString = 'Welcome back!';
 const loginToAccountString = 'Login to your existing account';
@@ -46,6 +42,14 @@ const unmatchedPasswordString = 'Passwords do not match!';
 const emptyFieldsString = 'This field cannot be empty!';
 const slashString = '/';
 const addPhotoString = 'Add Photo';
+const atSignString = '@';
+const missingAtSignString = "This field must contain the '@' sign!";
+const weakPasswordString = 'This field must contain at least a number and a special character';
+
+const authSuccessString = 'Authentication Successful!🎉';
+const authFailureString = 'Authentication Failed!🚫';
+const errorString = 'An error occured! Ensure you are connected to the internet...';
+const tryAnotherUsernameString= ' Try with another username';
 
 const homeString = 'Home';
 const eventsString = 'Events';
