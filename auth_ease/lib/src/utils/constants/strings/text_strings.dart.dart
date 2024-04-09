@@ -43,7 +43,7 @@ const loadingString = 'Loading...';
 const registeringString = 'Registering...';
 const loggingInString = 'Logging in...';
 const unmatchedPasswordString = 'Passwords do not match!';
-const emptyFieldsString = 'Field(s) cannot be empty!';
+const emptyFieldsString = 'This field cannot be empty!';
 const slashString = '/';
 const addPhotoString = 'Add Photo';
 

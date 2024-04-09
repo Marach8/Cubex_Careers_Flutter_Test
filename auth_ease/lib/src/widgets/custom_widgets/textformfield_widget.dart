@@ -8,8 +8,7 @@ import 'package:flutter/material.dart';
 class GenericTextFormField extends StatelessWidget {
   final String hintText;
   final bool? obscureText;
-  final Widget? leadingWidget,
-  suffixIcon;
+  final Widget? leadingWidget, suffixIcon;
   final FocusNode? focusNode;
   final String? Function(String? value)? validator;
   final void Function(String? value)? onSaved;
@@ -51,9 +50,26 @@ class GenericTextFormField extends StatelessWidget {
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: const BorderSide(
+            color: blackColor
+          ),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderSide: const BorderSide(
             color: redColor
           ),
           borderRadius: BorderRadius.circular(10),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderSide: const BorderSide(
+            color: redColor
+          ),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        errorStyle: const TextStyle().decorateTextStyle(
+          color: redColor,
+          fontWeight: fontWeight4,
+          fontSize: fontSize2half,
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(

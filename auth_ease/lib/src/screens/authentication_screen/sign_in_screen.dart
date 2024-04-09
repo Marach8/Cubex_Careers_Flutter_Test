@@ -28,24 +28,21 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
-  late TextEditingController emailController,
-  passwordController;
+  final formKey = GlobalKey<FormState>();
+
+  late String email, password;
   late ValueNotifier<bool> passwordNotifier, 
   confirmPasswordNotifier;
 
   @override 
   void initState(){
     super.initState();
-    emailController = TextEditingController();
-    passwordController = TextEditingController();
     passwordNotifier = ValueNotifier(false);
     confirmPasswordNotifier = ValueNotifier(false);
   }
 
   @override 
   void dispose(){
-    emailController.dispose();
-    passwordController.dispose();
     passwordNotifier.dispose();
     confirmPasswordNotifier.dispose();
     super.dispose();
@@ -112,31 +109,56 @@ class _SignInScreenState extends State<SignInScreen> {
                         text: loginToAccountString
                       ),
                       const Gap(20),
-                      GenericTextFormField(
-                        hintText: emailString,
-                        validator: (value){},
-                        leadingWidget: const Icon(Icons.email_outlined),
-                      ),
-                      const Gap(20),
-                      ValueListenableBuilder(
-                        valueListenable: passwordNotifier,
-                        builder: (_, value, __){
-                          return GenericTextFormField(
-                            hintText: passwordString,
-                            validator: (value){},
-                            leadingWidget: const Icon(Icons.lock_outline_rounded),
-                            suffixIcon: IconButton(
-                              onPressed: () => passwordNotifier.value = !passwordNotifier.value,
-                              icon: Visibility(
-                                visible: value,
-                                replacement: const Icon(Icons.visibility_rounded),
-                                child: const Icon(Icons.visibility_off_rounded),
-                              ),
+                      Form(
+                        key: formKey,
+                        child: Column(
+                          children: [
+                            GenericTextFormField(
+                              hintText: emailString,
+                              onSaved: (value) => email = value!,
+                              leadingWidget: const Icon(Icons.email_outlined),
+                              validator: (value){
+                                if(value == null || value.isEmpty){
+                                  return emptyFieldsString;
+                                }
+                                else{
+                                  return null;
+                                }
+                              },
                             ),
-                            obscureText: value ? false : true,
-                          );
-                        },
+
+                            const Gap(20),
+                            ValueListenableBuilder(
+                              valueListenable: passwordNotifier,
+                              builder: (_, value, __){
+                                return GenericTextFormField(
+                                  hintText: passwordString,
+                                  onSaved: (value) => email = value!,
+                                  leadingWidget: const Icon(Icons.lock_outline_rounded),
+                                  validator: (value){
+                                    if(value == null || value.isEmpty){
+                                      return emptyFieldsString;
+                                    }
+                                    else{
+                                      return null;
+                                    }
+                                  },
+                                  suffixIcon: IconButton(
+                                    onPressed: () => passwordNotifier.value = !passwordNotifier.value,
+                                    icon: Visibility(
+                                      visible: value,
+                                      replacement: const Icon(Icons.visibility_rounded),
+                                      child: const Icon(Icons.visibility_off_rounded),
+                                    ),
+                                  ),
+                                  obscureText: value ? false : true,
+                                );
+                              },
+                            ),
+                          ],
+                        ),
                       ),
+                      
                       const Gap(15),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -155,12 +177,15 @@ class _SignInScreenState extends State<SignInScreen> {
                       const Gap(20),
                       GenericElevatedButton(
                         onPressed: (){
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const HomeScreen()
-                            )
-                          );
+                          if(formKey.currentState!.validate()){
+                            formKey.currentState!.save();
+                          }
+                          // Navigator.pushReplacement(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //     builder: (context) => const HomeScreen()
+                          //   )
+                          // );
                         },
                         title: signInString,
                         backgroundColor: redColor,

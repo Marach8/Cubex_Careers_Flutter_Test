@@ -136,6 +136,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   return null;
                                 }
                               },
+                              onSaved: (value) => username = value!,
                               leadingWidget: const Icon(Iconsax.user),
                             ),
                             const Gap(15),
@@ -149,6 +150,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   return null;
                                 }
                               },
+                              onSaved: (value) => email = value!,
                               leadingWidget: const Icon(Icons.email_outlined),
                             ),
                             const Gap(15),
@@ -162,6 +164,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   return null;
                                 }
                               },
+                              onSaved: (value) => phoneNumber = value!,
                               leadingWidget: const Icon(Icons.phone_outlined),
                             ),
                             const Gap(15),
@@ -175,6 +178,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   return null;
                                 }
                               },
+                              onSaved: (value) => address = value!,
                               leadingWidget: const Icon(Iconsax.home),
                             ),
                             const Gap(15),
@@ -191,6 +195,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       return null;
                                     }
                                   },
+                                  onSaved: (value) => password = value!,
                                   leadingWidget: const Icon(Icons.lock_outline_rounded),
                                   suffixIcon: IconButton(
                                     onPressed: () => passwordNotifier.value = !passwordNotifier.value,
@@ -218,7 +223,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       return null;
                                     }
                                   },
-                                  
+                                  onSaved: (value) => confirmPassword = value!,
                                   leadingWidget: const Icon(Icons.lock_outline_rounded),
                                   suffixIcon: IconButton(
                                     onPressed: () => confirmPasswordNotifier.value = !confirmPasswordNotifier.value,
@@ -262,7 +267,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       GenericElevatedButton(
                         onPressed: () async{
                           final loadinScreen = LoadingScreen();
-                          if(formKey.isva)
+                          if(formKey.currentState!.validate()){
+                            formKey.currentState!.save();
+                          }
                           loadinScreen.showOverlay(context: context, text: registeringString);
                           await AuthService().registerNewUser(
                             username: username,
@@ -273,6 +280,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             imageString: userImageString!
                           );
                         },
+                        
                         title: signUpString,
                         backgroundColor: redColor,
                         color: whiteColor,
