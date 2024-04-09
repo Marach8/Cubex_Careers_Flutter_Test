@@ -3,7 +3,8 @@ import 'package:auth_ease/src/screens/main_screens/home_screen/tab_views/schedul
 import 'package:auth_ease/src/utils/constants/colors.dart';
 import 'package:auth_ease/src/utils/constants/fontsizes.dart';
 import 'package:auth_ease/src/utils/constants/fontweights.dart';
-import 'package:auth_ease/src/utils/constants/strings.dart';
+import 'package:auth_ease/src/utils/constants/strings/png_images_string.dart';
+import 'package:auth_ease/src/utils/constants/strings/text_strings.dart.dart';
 import 'package:auth_ease/src/widgets/custom_widgets/annotated_region_widget.dart';
 import 'package:auth_ease/src/widgets/custom_widgets/text_widget.dart';
 import 'package:auth_ease/src/widgets/custom_widgets/textfield_widget.dart';

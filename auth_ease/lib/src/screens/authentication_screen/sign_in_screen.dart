@@ -2,7 +2,8 @@ import 'package:auth_ease/src/screens/main_screens/home_screen/main_home_screen.
 import 'package:auth_ease/src/utils/constants/colors.dart';
 import 'package:auth_ease/src/utils/constants/fontsizes.dart';
 import 'package:auth_ease/src/utils/constants/fontweights.dart';
-import 'package:auth_ease/src/utils/constants/strings.dart';
+import 'package:auth_ease/src/utils/constants/strings/lottie_animation_strings.dart';
+import 'package:auth_ease/src/utils/constants/strings/text_strings.dart.dart';
 import 'package:auth_ease/src/widgets/custom_widgets/annotated_region_widget.dart';
 import 'package:auth_ease/src/widgets/custom_widgets/elevated_button_widget.dart';
 import 'package:auth_ease/src/widgets/custom_widgets/lottie_animation.dart';

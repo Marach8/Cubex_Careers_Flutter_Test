@@ -1,6 +1,7 @@
 import 'package:auth_ease/src/utils/constants/colors.dart';
 import 'package:auth_ease/src/utils/constants/fontsizes.dart';
 import 'package:auth_ease/src/utils/constants/fontweights.dart';
+import 'package:auth_ease/src/utils/functions/helper_functions.dart';
 import 'package:auth_ease/src/widgets/custom_widgets/text_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -51,6 +52,7 @@ SingleTickerProviderStateMixin{
   @override
   Widget build(BuildContext context) {
     sizeController.forward();
+
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
@@ -63,11 +65,22 @@ SingleTickerProviderStateMixin{
         child: ScaleTransition(
           scale: sizeAnimation,
           child: Center(
-            child: GenericText(
-              color: whiteColor,
-              fontSize: fontSize1,
-              fontWeight: fontWeight5,
-              text: widget.text,
+            child: Container(
+              width: 60,
+              decoration: BoxDecoration(
+                color: blackColor.withOpacity(0.2),
+                borderRadius: BorderRadius.circular(2),
+                border: Border.all(
+                  width: 0.1,
+                  color: redColor,
+                )
+              ),
+              child: GenericText(
+                color: whiteColor,
+                fontSize: fontSize1,
+                fontWeight: fontWeight6,
+                text: widget.text,
+              ),
             ),
           ),
         )

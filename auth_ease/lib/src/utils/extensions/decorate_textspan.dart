@@ -1,4 +1,4 @@
-import 'package:auth_ease/src/utils/constants/strings.dart';
+import 'package:auth_ease/src/utils/constants/strings/text_strings.dart.dart';
 import 'package:flutter/material.dart';
 
 extension DecorateTextSpan on TextSpan{

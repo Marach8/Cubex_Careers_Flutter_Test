@@ -1,6 +1,7 @@
 import 'dart:async' show Timer;
-import 'package:auth_ease/src/screens/landing/widgets/text_and_dots_indicator_widget.dart';
-import 'package:auth_ease/src/utils/constants/strings.dart';
+import 'package:auth_ease/src/screens/landing_screen/widgets/text_and_dots_indicator_widget.dart';
+import 'package:auth_ease/src/utils/constants/strings/png_images_string.dart';
+import 'package:auth_ease/src/utils/constants/strings/text_strings.dart.dart';
 import 'package:auth_ease/src/widgets/custom_widgets/container_with_animation.dart';
 import 'package:flutter/material.dart';
 
@@ -85,7 +86,10 @@ class _LandingScreenPageView extends State<LandingScreenPageView> {
         Positioned(
           bottom: 0,
           left: 0,
-          child: TextAndDotsIndicatorWidget(valueNotifier: valueNotifier,),
+          child: TextAndDotsIndicatorWidget(
+            valueNotifier: valueNotifier,
+            pageController: pageController
+          ),
         ),
       ],
     );

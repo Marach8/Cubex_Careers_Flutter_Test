@@ -1,8 +1,9 @@
-import 'package:auth_ease/src/screens/authentication/combined_animated_auth_screen.dart';
+import 'package:auth_ease/src/screens/authentication_screen/combined_animated_auth_screen.dart';
 import 'package:auth_ease/src/utils/constants/colors.dart';
 import 'package:auth_ease/src/utils/constants/fontsizes.dart';
 import 'package:auth_ease/src/utils/constants/fontweights.dart';
-import 'package:auth_ease/src/utils/constants/strings.dart';
+import 'package:auth_ease/src/utils/constants/strings/text_strings.dart.dart';
+import 'package:auth_ease/src/utils/ui_dialogs/flushbar.dart';
 import 'package:auth_ease/src/widgets/custom_widgets/elevated_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -53,8 +54,11 @@ class BottomSheetForLandingScreen extends StatelessWidget {
                   fontSize: fontSize4,
                   backgroundColor: whiteColor,
                   color: redColor,
-                  onPressed: (){},
-                  title: signUpString
+                  onPressed: () => showFlushbar(
+                    context: context,
+                    message: comingSoonString
+                  ),
+                  title: ourWebsiteString
                 ),
                 const Gap(90)
               ]

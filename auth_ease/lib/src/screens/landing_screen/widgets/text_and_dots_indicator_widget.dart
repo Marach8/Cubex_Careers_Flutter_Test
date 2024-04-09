@@ -1,7 +1,7 @@
 import 'package:auth_ease/src/utils/constants/colors.dart';
 import 'package:auth_ease/src/utils/constants/fontsizes.dart';
 import 'package:auth_ease/src/utils/constants/fontweights.dart';
-import 'package:auth_ease/src/utils/constants/strings.dart';
+import 'package:auth_ease/src/utils/constants/strings/text_strings.dart.dart';
 import 'package:auth_ease/src/widgets/custom_widgets/text_widget.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
@@ -9,10 +9,12 @@ import 'package:gap/gap.dart';
 
 class TextAndDotsIndicatorWidget extends StatelessWidget {
   final ValueNotifier<int> valueNotifier;
+  final PageController pageController;
   
   const TextAndDotsIndicatorWidget({
     super.key,
-    required this.valueNotifier
+    required this.valueNotifier,
+    required this.pageController
   });
 
   @override
@@ -37,6 +39,10 @@ class TextAndDotsIndicatorWidget extends StatelessWidget {
               return DotsIndicator(
                 position: value,
                 dotsCount: 5,
+                onTap: (dotPosition) {
+                  valueNotifier.value = dotPosition;
+                  pageController.jumpToPage(dotPosition);
+                },
                 decorator: DotsDecorator(
                   activeColor: redColor,
                   activeShape: RoundedRectangleBorder(

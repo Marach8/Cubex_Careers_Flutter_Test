@@ -1,5 +1,5 @@
-import 'package:auth_ease/src/screens/authentication/combined_animated_auth_screen.dart';
-import 'package:auth_ease/src/screens/landing/main_landing_screen.dart';
+import 'package:auth_ease/src/screens/authentication_screen/combined_animated_auth_screen.dart';
+import 'package:auth_ease/src/screens/landing_screen/main_landing_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {

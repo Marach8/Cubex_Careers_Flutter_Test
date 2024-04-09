@@ -1,12 +1,10 @@
-const twoPeopleJpg = 'assets/png_images/pexels-armin-rimoldi-5553080.png';
-const threePeople1Jpg = 'assets/png_images/pexels-buro-millennial-1438072 (1).png';
-const threePeople2Jpg = 'assets/png_images/pexels-kampus-production-5940841.png';
-const onePersonJpg = 'assets/png_images/pexels-charlotte-may-5965930.png';
-const manyPeopleJpg = 'assets/png_images/pexels-kampus-production-5940841.png';
-const universityJpg = 'assets/png_images/zhanhui-li-1iuxWsIZ6ko-unsplash.png';
-
-const bikeRiderLottie = 'assets/lottie_json/Animation - 1711125544499.json';
-const bikeRider2Lottie = 'assets/lottie_json/Animation - 1711125602836.json';
+const text1 = 'Embark on an exciting journey with AuthEase...';
+const text2 = 'We are delighted to have you with us...';
+const text3 = 'Start your adventure and discover what awaits you...';
+const text4 = 'Explore our features and make the most out of your experience...';
+const text5 = 'Get Started and unleash the unending possibilities...';
+const ourWebsiteString = 'Our Website';
+const comingSoonString = 'Will be available soon...😎';
 
 
 const quickSandFont = 'QuickSand';
@@ -15,12 +13,6 @@ const getStartedString = 'Get Started';
 const signUpString = 'Sign Up';
 const signInString = 'Sign In';
 const introString = 'Create Your Own Future Today...';
-
-const text1 = 'Welcome to CampusConnect';
-const text2 = 'Discuss latest Campus trends';
-const text3 = 'Get updates of hottest events on campus';
-const text4 = 'Share campus events with your friend';
-const text5 = 'Have a nice experience with us';
 
 const initializingString = 'Initializing';
 
