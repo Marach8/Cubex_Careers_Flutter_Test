@@ -7,7 +7,7 @@ import 'package:auth_ease/src/utils/constants/strings/png_images_string.dart';
 import 'package:auth_ease/src/utils/constants/strings/text_strings.dart.dart';
 import 'package:auth_ease/src/widgets/custom_widgets/annotated_region_widget.dart';
 import 'package:auth_ease/src/widgets/custom_widgets/text_widget.dart';
-import 'package:auth_ease/src/widgets/custom_widgets/textfield_widget.dart';
+import 'package:auth_ease/src/widgets/custom_widgets/textformfield_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 

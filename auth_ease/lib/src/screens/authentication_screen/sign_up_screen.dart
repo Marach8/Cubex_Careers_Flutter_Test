@@ -1,16 +1,19 @@
+import 'package:auth_ease/src/screens/authentication_screen/sub_widgets/add_photo_widget.dart';
+import 'package:auth_ease/src/screens/authentication_screen/sub_widgets/signup_form.dart';
 import 'package:auth_ease/src/utils/constants/colors.dart';
 import 'package:auth_ease/src/utils/constants/fontsizes.dart';
 import 'package:auth_ease/src/utils/constants/fontweights.dart';
 import 'package:auth_ease/src/utils/constants/strings/lottie_animation_strings.dart';
 import 'package:auth_ease/src/utils/constants/strings/text_strings.dart.dart';
+import 'package:auth_ease/src/utils/functions/pick_profile_photo.dart';
 import 'package:auth_ease/src/widgets/custom_widgets/annotated_region_widget.dart';
 import 'package:auth_ease/src/widgets/custom_widgets/elevated_button_widget.dart';
 import 'package:auth_ease/src/widgets/custom_widgets/lottie_animation.dart';
 import 'package:auth_ease/src/widgets/custom_widgets/rich_text_widget.dart';
 import 'package:auth_ease/src/widgets/custom_widgets/text_widget.dart';
-import 'package:auth_ease/src/widgets/custom_widgets/textfield_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+
 
 class SignUpScreen extends StatefulWidget {
   final AnimationController controller1, controller2;
@@ -26,32 +29,42 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  late TextEditingController emailController,
-  passwordController, confirmPasswordController,
-  usernameController;
-
+  // late TextEditingController emailController,
+  // passwordController, confirmPasswordController,
+  // usernameController, addressController,
+  // phoneNumberController;
+  final formKey = GlobalKey<FormState>();
   late ValueNotifier<bool> passwordNotifier, 
   confirmPasswordNotifier;
+  late ValueNotifier<String> fileNameNotifier;
+
+  String? userImageString;
 
   @override 
   void initState(){
     super.initState();
-    usernameController = TextEditingController();
-    emailController = TextEditingController();
-    passwordController = TextEditingController();
-    confirmPasswordController = TextEditingController();
+    // usernameController = TextEditingController();
+    // emailController = TextEditingController();
+    // addressController = TextEditingController();
+    // phoneNumberController = TextEditingController();
+    // passwordController = TextEditingController();
+    // confirmPasswordController = TextEditingController();
     passwordNotifier = ValueNotifier(false);
     confirmPasswordNotifier = ValueNotifier(false);
+    fileNameNotifier = ValueNotifier(emptyString);
   }
 
   @override 
   void dispose(){
-    usernameController.dispose();
-    emailController.dispose();
-    passwordController.dispose();
-    confirmPasswordController.dispose();
+    // usernameController.dispose();
+    // emailController.dispose();
+    // addressController.dispose();
+    // phoneNumberController.dispose();
+    // passwordController.dispose();
+    // confirmPasswordController.dispose();
     passwordNotifier.dispose();
     confirmPasswordNotifier.dispose();
+    fileNameNotifier.dispose();
     super.dispose();
   }
 
@@ -115,59 +128,40 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         fontWeight: fontWeight4,
                         text: createAccountString
                       ),
+
                       const Gap(15),
-                      GenericTextField(
-                        hintText: userNameString,
-                        controller: usernameController,
-                        leadingWidget: const Icon(Icons.person),
+
+                      Form(
+                        key: formKey,
+                        child: FormFieldsWidget(
+                          passwordNotifier: passwordNotifier,
+                          confirmPasswordNotifier: confirmPasswordNotifier,
+                        ),
                       ),
+
                       const Gap(15),
-                      GenericTextField(
-                        hintText: emailString,
-                        controller: emailController,
-                        leadingWidget: const Icon(Icons.email_outlined),
+
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: ValueListenableBuilder(
+                          valueListenable: fileNameNotifier,
+                          builder: (_, fileName, __) => GestureDetector(
+                            onTap: () async{
+                              final pickedPhotoDetails = await pickProfilePhoto();
+                              if(pickedPhotoDetails != null){
+                                final imageFileName = pickedPhotoDetails.first;
+                                final imageString = pickedPhotoDetails.last;
+                                fileNameNotifier.value = imageFileName;
+                                userImageString = imageString;
+                              }
+                            },
+                            child: AddPhotoWidget(fileName: fileName)
+                          ),
+                        ),
                       ),
+
                       const Gap(15),
-                      ValueListenableBuilder(
-                        valueListenable: passwordNotifier,
-                        builder: (_, value, __){
-                          return GenericTextField(
-                            hintText: passwordString,
-                            controller: passwordController,
-                            leadingWidget: const Icon(Icons.lock_outline_rounded),
-                            suffixIcon: IconButton(
-                              onPressed: () => passwordNotifier.value = !passwordNotifier.value,
-                              icon: Visibility(
-                                visible: value,
-                                replacement: const Icon(Icons.visibility_rounded),
-                                child: const Icon(Icons.visibility_off_rounded),
-                              ),
-                            ),
-                            obscureText: value ? false : true,
-                          );
-                        },
-                      ),
-                      const Gap(15),
-                      ValueListenableBuilder(
-                        valueListenable: confirmPasswordNotifier,
-                        builder: (_, value, __){
-                          return GenericTextField(
-                            hintText: confirmPasswordString,
-                            controller: confirmPasswordController,
-                            leadingWidget: const Icon(Icons.lock_outline_rounded),
-                            suffixIcon: IconButton(
-                              onPressed: () => confirmPasswordNotifier.value = !confirmPasswordNotifier.value,
-                              icon: Visibility(
-                                visible: value,
-                                replacement: const Icon(Icons.visibility_rounded),
-                                child: const Icon(Icons.visibility_off_rounded),
-                              ),
-                            ),
-                            obscureText: value ? false : true,
-                          );
-                        },
-                      ),
-                      const Gap(15),
+
                       GenericElevatedButton(
                         onPressed: (){},
                         title: signUpString,

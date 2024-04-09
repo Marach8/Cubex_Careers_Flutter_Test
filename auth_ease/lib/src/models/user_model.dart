@@ -9,14 +9,18 @@ class UserPayload extends MapView<String, String>{
     required String username,
     required String email,
     required String password, 
-    required String userId
+    required String address,
+    required String phoneNumber,
+    required String profilePictureString
   }): super(
     {
-        userNameString.toLowerCase(): username,
-        emailString.toLowerCase(): email,
-        passwordString.toLowerCase(): password,
-        userIdString: userId,
-        dateTimeOfSignUpString : DateFormat(dateFormatString).format(DateTime.now())
+      userNameString.toLowerCase(): username,
+      emailString.toLowerCase(): email,
+      passwordString.toLowerCase(): password,
+      addressString.toLowerCase(): address,
+      phoneNumberString.toLowerCase(): phoneNumber,
+      profilePictureString.toLowerCase(): profilePictureString,
+      dateTimeOfSignUpString : DateFormat(dateFormatString).format(DateTime.now())
     }
   );
 }

@@ -19,7 +19,9 @@ const initializingString = 'Initializing';
 const userNameString = 'Username';
 const emailString = 'Email';
 const passwordString = 'Password';
-const userIdString = 'user-uid';
+const addressString = 'Address';
+const phoneNumberString = 'Phone Number';
+const profilePictureString = 'Profile Picture';
 const dateTimeOfSignUpString = 'datetime-of-signUp';
 const dateFormatString = 'yyyy-MM-dd, hh:mm a';
 
@@ -42,6 +44,8 @@ const registeringString = 'Registering...';
 const loggingInString = 'Logging in...';
 const unmatchedPasswordString = 'Passwords do not match!';
 const emptyFieldsString = 'Field(s) cannot be empty!';
+const slashString = '/';
+const addPhotoString = 'Add Photo';
 
 const homeString = 'Home';
 const eventsString = 'Events';

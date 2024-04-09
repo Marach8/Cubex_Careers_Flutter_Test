@@ -10,7 +10,7 @@ import 'package:auth_ease/src/widgets/custom_widgets/lottie_animation.dart';
 import 'package:auth_ease/src/widgets/custom_widgets/rich_text_widget.dart';
 import 'package:auth_ease/src/widgets/custom_widgets/text_widget.dart';
 import 'package:auth_ease/src/widgets/custom_widgets/textbutton_widget.dart';
-import 'package:auth_ease/src/widgets/custom_widgets/textfield_widget.dart';
+import 'package:auth_ease/src/widgets/custom_widgets/textformfield_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -112,18 +112,18 @@ class _SignInScreenState extends State<SignInScreen> {
                         text: loginToAccountString
                       ),
                       const Gap(20),
-                      GenericTextField(
+                      GenericTextFormField(
                         hintText: emailString,
-                        controller: emailController,
+                        validator: (value){},
                         leadingWidget: const Icon(Icons.email_outlined),
                       ),
                       const Gap(20),
                       ValueListenableBuilder(
                         valueListenable: passwordNotifier,
                         builder: (_, value, __){
-                          return GenericTextField(
+                          return GenericTextFormField(
                             hintText: passwordString,
-                            controller: passwordController,
+                            validator: (value){},
                             leadingWidget: const Icon(Icons.lock_outline_rounded),
                             suffixIcon: IconButton(
                               onPressed: () => passwordNotifier.value = !passwordNotifier.value,

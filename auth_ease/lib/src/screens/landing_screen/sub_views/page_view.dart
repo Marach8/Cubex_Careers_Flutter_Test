@@ -24,13 +24,9 @@ class _LandingScreenPageView extends State<LandingScreenPageView> {
     valueNotifier = ValueNotifier<int>(0);
     timer = Timer.periodic(
       const Duration(seconds: 5), 
-      (timer) {
+      (_) {
         if(pageController.page == 4.0){
-          pageController.animateToPage(
-            0,
-            duration: const Duration(seconds: 3),
-            curve: Curves.decelerate
-          );
+          pageController.jumpToPage(0);
         }
         else{
           pageController.nextPage(

@@ -5,18 +5,18 @@ import 'package:auth_ease/src/utils/extensions/decorate_textstyle.dart';
 import 'package:flutter/material.dart';
 
 
-class GenericTextField extends StatelessWidget {
+class GenericTextFormField extends StatelessWidget {
   final String hintText;
-  final TextEditingController controller;
   final bool? obscureText;
   final Widget? leadingWidget,
   suffixIcon;
   final FocusNode? focusNode;
+  final String? Function(String? value)? validator;
 
-  const GenericTextField({
+  const GenericTextFormField({
     super.key,
     required this.hintText,
-    required this.controller,
+    required this.validator,
     this.leadingWidget,
     this.obscureText,
     this.suffixIcon,
@@ -26,8 +26,8 @@ class GenericTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return TextField(
-      controller: controller,
+    return TextFormField(
+      validator: validator,
       maxLines: 1,
       focusNode: focusNode,
       cursorColor: blackColor,
