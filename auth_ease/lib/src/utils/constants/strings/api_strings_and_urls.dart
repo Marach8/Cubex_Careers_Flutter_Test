@@ -5,3 +5,5 @@ const contentType = 'Content-Type';
 const jsonFormat = 'application/json';
 const accept = 'Accept';
 const token = 'token';
+const bearer = 'Bearer ';
+const authorization = 'Authorization';

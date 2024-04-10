@@ -4,16 +4,16 @@ class UserDataModel{
   final String username,
   email,
   address,
-  password, 
+  //password, 
   phoneNumber,
-  dateTimeOfRegistration,
-  imageString;
+  dateTimeOfRegistration;
+  final String? imageString;
 
 
   UserDataModel({
     required this.username,
     required this.email,
-    required this.password,
+    //required this.password,
     required this.address,
     required this.phoneNumber,
     required this.imageString,
@@ -25,7 +25,7 @@ class UserDataModel{
   }) => UserDataModel(
       username: json[userNameString.toLowerCase()],
       email: json[emailString.toLowerCase()],
-      password: json[passwordString.toLowerCase()],
+      //password: json[passwordString.toLowerCase()],
       address: json[addressString.toLowerCase()],
       phoneNumber: json[phoneNumberString.toLowerCase()],
       dateTimeOfRegistration: json[dateTimeOfSignUpString],

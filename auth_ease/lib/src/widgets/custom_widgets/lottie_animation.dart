@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 class GenericLottieAnimation extends StatelessWidget {
-  final String lottiePath;
+  final String lottieString;
   final double? height, width;
   
   const GenericLottieAnimation({
     super.key,
-    required this.lottiePath,
+    required this.lottieString,
     this.height,
     this.width
   });
@@ -15,7 +15,7 @@ class GenericLottieAnimation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Lottie.asset(
-      lottiePath,
+      lottieString,
       fit: BoxFit.cover,
       width: width,
       height: height,

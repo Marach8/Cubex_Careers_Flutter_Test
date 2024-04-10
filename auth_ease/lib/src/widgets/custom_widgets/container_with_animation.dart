@@ -1,7 +1,6 @@
 import 'package:auth_ease/src/utils/constants/colors.dart';
 import 'package:auth_ease/src/utils/constants/fontsizes.dart';
 import 'package:auth_ease/src/utils/constants/fontweights.dart';
-import 'package:auth_ease/src/utils/functions/helper_functions.dart';
 import 'package:auth_ease/src/widgets/custom_widgets/text_widget.dart';
 import 'package:flutter/material.dart';
 

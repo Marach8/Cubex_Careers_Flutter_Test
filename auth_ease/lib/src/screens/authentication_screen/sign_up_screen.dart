@@ -89,7 +89,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             child: ListView(
               children: [
                 const GenericLottieAnimation(
-                  lottiePath: bikeRiderLottie,
+                  lottieString: bikeRiderLottie,
                   height: 150,
                 ),
                 

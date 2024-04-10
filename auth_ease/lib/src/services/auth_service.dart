@@ -1,13 +1,16 @@
 import 'dart:convert';
 import 'package:auth_ease/src/utils/constants/strings/api_strings_and_urls.dart';
 import 'package:auth_ease/src/utils/constants/strings/text_strings.dart.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+
 
 class AuthService{
   AuthService._sharedInstance();
   static final AuthService _shared = AuthService._sharedInstance();
   factory AuthService() => _shared;
+  final secureStorage = const FlutterSecureStorage();
 
   Future<String> registerNewUser({
     required String username,
@@ -59,12 +62,12 @@ class AuthService{
   }
 
 
-  Future<dynamic> loginUser({
-    required String email,
+  Future<String> loginUser({
+    required String username,
     required String password
   }) async{
     final userPayload = {
-      emailString.toLowerCase(): email,
+      userNameString.toLowerCase(): username,
       passwordString.toLowerCase(): password,
     };
     
@@ -80,15 +83,15 @@ class AuthService{
         }
       );
 
-      if(response.statusCode == 201){
+      if(response.statusCode == 200){
         final jsonData = jsonDecode(response.body);
-        final loginToken = jsonData[token];
-        print(loginToken);
+        final authToken = jsonData[token];
+        await secureStorage.write(key: token, value: authToken);
         return authSuccessString;
       }
 
-      else if(response.statusCode == 409){
-        return authFailureString + tryAnotherUsernameString;
+      else if(response.statusCode == 400){
+        return ensureLoginWithUsernameString;
       }
 
       else{

@@ -1,3 +1,4 @@
+import 'package:auth_ease/src/screens/profile_screen/main_profile_page.dart';
 import 'package:auth_ease/src/services/auth_service.dart';
 import 'package:auth_ease/src/utils/constants/colors.dart';
 import 'package:auth_ease/src/utils/constants/fontsizes.dart';
@@ -33,7 +34,7 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   final formKey = GlobalKey<FormState>();
 
-  late String email, password;
+  late String username, password;
   late ValueNotifier<bool> passwordNotifier, 
   confirmPasswordNotifier;
 
@@ -78,7 +79,7 @@ class _SignInScreenState extends State<SignInScreen> {
             child: ListView(
               children: [
                 const GenericLottieAnimation(
-                  lottiePath: bikeRiderLottie,
+                  lottieString: bikeRiderLottie,
                   height: 180,
                 ),
                 
@@ -119,8 +120,8 @@ class _SignInScreenState extends State<SignInScreen> {
                         child: Column(
                           children: [
                             GenericTextFormField(
-                              hintText: emailString,
-                              onSaved: (value) => email = value!,
+                              hintText: userNameString,
+                              onSaved: (value) => username = value!,
                               leadingWidget: const Icon(Icons.email_outlined),
                               validator: (value) => validateForm(value: value),
                             ),
@@ -169,24 +170,31 @@ class _SignInScreenState extends State<SignInScreen> {
                       GenericElevatedButton(
                         onPressed: () async{
                           if(formKey.currentState!.validate()){
-                            formKey.currentState!.save();
-                            loadingScreen.showOverlay(context: context, text: registeringString);
-                              await AuthService().loginUser(
-                                email: email.trim(),
-                                password: password.trim(),
-                              ).then((registrationResult) async{
-                                loadingScreen.hideOverlay();
-                                await showFlushbar(context: context, message: registrationResult);
-                              });
-                          }
 
-                          // Navigator.pushReplacement(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => const HomeScreen()
-                          //   )
-                          // );
+                            formKey.currentState!.save();
+                            loadingScreen.showOverlay(context: context, text: loggingInString);
+                            await AuthService().loginUser(
+                              username: username.trim(),
+                              password: password.trim(),
+                            ).then((loginResult) async{
+                              loadingScreen.hideOverlay();
+                              await showFlushbar(
+                                context: context,
+                                message: loginResult
+                              ).then((_){
+                                if(loginResult == authSuccessString){
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const MainProfileScreen()
+                                    )
+                                  );
+                                }
+                              });
+                            });
+                          }
                         },
+
                         title: signInString,
                         backgroundColor: redColor,
                         color: whiteColor,
