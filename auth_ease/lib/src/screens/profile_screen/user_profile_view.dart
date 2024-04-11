@@ -7,7 +7,6 @@ import 'package:auth_ease/src/utils/constants/maps.dart';
 import 'package:auth_ease/src/utils/constants/strings/api_strings_and_urls.dart';
 import 'package:auth_ease/src/utils/constants/strings/lottie_animation_strings.dart';
 import 'package:auth_ease/src/utils/constants/strings/text_strings.dart.dart';
-import 'package:auth_ease/src/utils/functions/decode_image_string.dart';
 import 'package:auth_ease/src/utils/ui_dialogs/flushbar.dart';
 import 'package:auth_ease/src/utils/ui_dialogs/generic_dialog.dart';
 import 'package:auth_ease/src/utils/ui_dialogs/loading_screen/loading_screen.dart';
@@ -18,6 +17,7 @@ import 'package:auth_ease/src/widgets/custom_widgets/text_widget.dart';
 import 'package:auth_ease/src/widgets/custom_widgets/textbutton_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 
 
@@ -31,8 +31,6 @@ class UserProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final imageBytes = decodeImageString(imageString: userData.imageString!);
-
     return Scaffold(
       appBar: AppBar(
         title: const GenericText(
@@ -53,11 +51,11 @@ class UserProfileView extends StatelessWidget {
                 alignment: Alignment.center,
                 child: CustomCircularContainer(
                   radius: 200,
-                  child: imageBytes == null ? 
+                  child: userData.imageString == null ? 
                     const GenericLottieAnimation(lottieString: displayPictureLottie,) :
-                    Image.memory(
-                      imageBytes,
-                      fit: BoxFit.cover,
+                    SvgPicture.network(
+                      userData.imageString!,
+                      fit: BoxFit.cover
                     )
                 ),
               ),

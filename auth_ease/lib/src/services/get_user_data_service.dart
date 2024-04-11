@@ -3,7 +3,6 @@ import 'package:auth_ease/src/models/user_model.dart';
 import 'package:auth_ease/src/utils/constants/strings/api_strings_and_urls.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
-import 'dart:developer' as marach show log;
 
 
 Future<UserDataModel?> fetchUserData() async{
@@ -23,17 +22,14 @@ Future<UserDataModel?> fetchUserData() async{
 
     if(response.statusCode == 200){
       final jsonData = jsonDecode(response.body);
-      marach.log(jsonData.toString());
       final userData = UserDataModel.fromJson(json: jsonData);
       return userData;
     }
     else{
-      marach.log(response.statusCode.toString());
       return null;
     }
   }
   catch (e){
-    marach.log(e.toString());
     return null;
   }
 }

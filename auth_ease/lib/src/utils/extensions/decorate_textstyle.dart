@@ -6,7 +6,7 @@ extension DecorateTextStyle on TextStyle{
     required Color color, 
     required FontWeight fontWeight,
     required double fontSize,
-    bool? controlOverflow
+    bool? controlOverflow,
   }) => TextStyle(
     fontFamily: quickSandFont,
     color: color, 

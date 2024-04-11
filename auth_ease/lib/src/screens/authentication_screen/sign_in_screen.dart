@@ -1,13 +1,10 @@
-import 'package:auth_ease/src/screens/profile_screen/main_profile_page.dart';
-import 'package:auth_ease/src/services/auth_service.dart';
 import 'package:auth_ease/src/utils/constants/colors.dart';
 import 'package:auth_ease/src/utils/constants/fontsizes.dart';
 import 'package:auth_ease/src/utils/constants/fontweights.dart';
 import 'package:auth_ease/src/utils/constants/strings/lottie_animation_strings.dart';
 import 'package:auth_ease/src/utils/constants/strings/text_strings.dart.dart';
+import 'package:auth_ease/src/utils/functions/authentication.dart';
 import 'package:auth_ease/src/utils/functions/helper_functions.dart';
-import 'package:auth_ease/src/utils/ui_dialogs/flushbar.dart';
-import 'package:auth_ease/src/utils/ui_dialogs/loading_screen/loading_screen.dart';
 import 'package:auth_ease/src/widgets/custom_widgets/annotated_region_widget.dart';
 import 'package:auth_ease/src/widgets/custom_widgets/elevated_button_widget.dart';
 import 'package:auth_ease/src/widgets/custom_widgets/lottie_animation.dart';
@@ -55,7 +52,6 @@ class _SignInScreenState extends State<SignInScreen> {
   
   @override
   Widget build(BuildContext context) {
-    final loadingScreen = LoadingScreen();
 
     return GenericAnnotatedRegion(
       child: Scaffold(
@@ -172,26 +168,11 @@ class _SignInScreenState extends State<SignInScreen> {
                           if(formKey.currentState!.validate()){
 
                             formKey.currentState!.save();
-                            loadingScreen.showOverlay(context: context, text: loggingInString);
-                            await AuthService().loginUser(
-                              username: username.trim(),
-                              password: password.trim(),
-                            ).then((loginResult) async{
-                              loadingScreen.hideOverlay();
-                              await showFlushbar(
-                                context: context,
-                                message: loginResult
-                              ).then((_){
-                                if(loginResult == authSuccessString){
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const MainProfileScreen()
-                                    )
-                                  );
-                                }
-                              });
-                            });
+                            await signInUser(
+                              context: context,
+                              username: username,
+                              password: password
+                            );
                           }
                         },
 

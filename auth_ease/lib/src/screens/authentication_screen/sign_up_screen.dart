@@ -5,6 +5,7 @@ import 'package:auth_ease/src/utils/constants/fontsizes.dart';
 import 'package:auth_ease/src/utils/constants/fontweights.dart';
 import 'package:auth_ease/src/utils/constants/strings/lottie_animation_strings.dart';
 import 'package:auth_ease/src/utils/constants/strings/text_strings.dart.dart';
+import 'package:auth_ease/src/utils/functions/authentication.dart';
 import 'package:auth_ease/src/utils/functions/helper_functions.dart';
 import 'package:auth_ease/src/utils/functions/pick_profile_photo.dart';
 import 'package:auth_ease/src/utils/ui_dialogs/flushbar.dart';
@@ -18,7 +19,6 @@ import 'package:auth_ease/src/widgets/custom_widgets/textformfield_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:iconsax/iconsax.dart';
-import 'dart:developer' as marach show log;
 
 
 class SignUpScreen extends StatefulWidget {
@@ -241,13 +241,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                       GenericElevatedButton(
                         onPressed: () async{
-
+                          final authService = AuthService();
                           if(formKey.currentState!.validate()){
                             formKey.currentState!.save();
                             
                             if(password.trim() == confirmPassword.trim()){
                               loadingScreen.showOverlay(context: context, text: registeringString);
-                              await AuthService().registerNewUser(
+                              await authService.authRegister(
                                 username: username.trim(),
                                 email: email.trim(),
                                 password: password.trim(),
@@ -256,8 +256,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 imageString: userImageString
                               ).then((registrationResult) async{
                                 loadingScreen.hideOverlay();
-                                marach.log(registrationResult);
-                                await showFlushbar(context: context, message: registrationResult);
+                                await showFlushbar(
+                                  context: context, 
+                                  message: registrationResult
+                                ).then((_) async{
+                                  if(registrationResult == authSuccessString){
+                                    await signInUser(
+                                      context: context,
+                                      username: username, 
+                                      password: password
+                                    );
+                                  }
+                                });
                               });
                             }
                             //Password and confirmPassword do not match

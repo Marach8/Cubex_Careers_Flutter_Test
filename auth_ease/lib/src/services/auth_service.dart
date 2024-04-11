@@ -12,7 +12,7 @@ class AuthService{
   factory AuthService() => _shared;
   final secureStorage = const FlutterSecureStorage();
 
-  Future<String> registerNewUser({
+  Future<String> authRegister({
     required String username,
     required String email,
     required String password,
@@ -62,7 +62,7 @@ class AuthService{
   }
 
 
-  Future<String> loginUser({
+  Future<String> authLogin({
     required String username,
     required String password
   }) async{

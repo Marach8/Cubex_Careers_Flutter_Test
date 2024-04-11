@@ -2,7 +2,6 @@ import 'dart:math' show pi;
 import 'package:auth_ease/src/screens/authentication_screen/sign_in_screen.dart';
 import 'package:auth_ease/src/screens/authentication_screen/sign_up_screen.dart';
 import 'package:auth_ease/src/utils/constants/strings/png_images_string.dart';
-import 'package:auth_ease/src/utils/constants/strings/text_strings.dart.dart';
 import 'package:flutter/material.dart';
 
 class SignInAndSignUpScreen extends StatefulWidget {

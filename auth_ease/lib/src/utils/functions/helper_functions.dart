@@ -14,7 +14,8 @@ bool passwordIsStrong(String password){
 
 bool phoneNumberIsOkay(String phoneNumber){
   return phoneNumber.split(emptyString)
-    .every((element) => numbers0to9.contains(element));
+    .every((element) => numbers0to9.contains(element)) &&
+    phoneNumber.length >= 10;
 }
 
 String? validateForm({
